@@ -1,0 +1,38 @@
+import uuid
+from datetime import date
+
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
+
+
+class ClientOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    client_id: uuid.UUID
+    last_name: str
+    first_name: str
+    middle_name: str | None = None
+    birth_date: date
+    phone: str
+    email: str | None = None
+    avatar_url: str | None = None
+    age: int | None = None
+
+
+class ContactsUpdate(BaseModel):
+    phone: str | None = Field(None, pattern=r"^\+?\d{10,15}$")
+    email: EmailStr | None = None
+
+
+class DocumentIn(BaseModel):
+    document_type: str = Field(max_length=200)
+    series: str = Field(max_length=20)
+    number: str = Field(max_length=20)
+    issue_date: date
+    issued_by: str = Field(max_length=300)
+
+
+class DocumentOut(DocumentIn):
+    model_config = ConfigDict(from_attributes=True)
+
+    document_id: uuid.UUID
+    client_id: uuid.UUID
