@@ -4,10 +4,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import BaseModel, PostgresDsn
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = BASE_DIR.parent
 
 class AuthJWT(BaseModel):
-    private_key_path: Path = BASE_DIR / "certs" / "jwt-private.pem"
-    public_key_path: Path = BASE_DIR / "certs" / "jwt-public.pem"
+    private_key_path: Path = ROOT_DIR / "certs" / "jwt-private.pem"
+    public_key_path: Path = ROOT_DIR / "certs" / "jwt-public.pem"
     algorithm: str = "RS256"
     access_token_expire_minutes: int = 15
     refresh_token_expire_days: int = 30
@@ -33,7 +34,16 @@ class Settings(BaseSettings):
     auth_jwt: AuthJWT = AuthJWT()
     run: RunConfig = RunConfig()
     api: ApiPrefix = ApiPrefix()
-    model_config =  SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config =  SettingsConfigDict(
+        env_file= (
+            ROOT_DIR / ".env",
+            ROOT_DIR / ".env.template",
+        ),
+        extra="ignore",
+        case_sensitive=False,
+        env_nested_delimiter="__",
+        env_prefix="APP_CONFIG__",
+    )
 
 
 settings = Settings()
