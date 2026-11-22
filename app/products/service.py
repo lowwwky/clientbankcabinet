@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from .models import Account, Card
+from core.models.products import Account, Card
 from .schemas import AccountDetailOut, CardOut, CardSettingsIn
 
 

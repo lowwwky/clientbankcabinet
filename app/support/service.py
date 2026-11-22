@@ -1,14 +1,13 @@
-import re
 import uuid
 
 from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from ..payments.models import Operation
-from ..products.models import Account
-from .models import Chat, Faq, Message, SupportRequest
-from .schemas import MessageIn, RequestIn
+from core.models.payments import Operation
+from core.models.products import Account
+from core.models.support import Faq, SupportRequest
+from .schemas import RequestIn
 
 SUPPORT_BOT_ID = uuid.UUID("00000000-0000-0000-0000-000000000001")
 

@@ -4,7 +4,7 @@ from datetime import date
 from sqlalchemy import Date,ForeignKey,String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from ..core.db import Base
+from core.db import Base
 
 class Client(Base):
     __tablename__ = "clients"

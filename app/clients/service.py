@@ -1,11 +1,11 @@
 import uuid
 from datetime import date
 
-from fastapi import HTTPException, APIRouter
+from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from .models import Client, Document
+from core.models.clients import Client, Document
 from .schemas import ClientOut, ContactsUpdate, DocumentIn
 
 def calc_age(birthdate: date, today:date | None = None) -> int:

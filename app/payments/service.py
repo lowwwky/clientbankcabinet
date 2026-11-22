@@ -1,15 +1,13 @@
 import logging
 import uuid
-from datetime import datetime
-from decimal import Decimal
 
 from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from ..products.models import Account
-from .models import Favorite, Operation, RecentRecipient, Transfer
-from .schemas import FavoriteIn, SummaryOut, TransferIn, TransferOut
+from core.models.products import Account
+from core.models.payments import Favorite, Operation
+from .schemas import FavoriteIn
 
 logger = logging.getLogger("bank.payments")
 

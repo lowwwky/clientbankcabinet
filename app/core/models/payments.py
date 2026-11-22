@@ -5,7 +5,7 @@ from decimal import Decimal
 from sqlalchemy import JSON, ForeignKey, Numeric, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
-from ..core.db import Base, utcnow
+from core.db import Base, utcnow
 
 
 class Operation(Base):
@@ -25,7 +25,7 @@ class Transfer(Base):
 
     transfer_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     operation_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("operations.operation_id"), unique=True)
-    recipient: Mapped[str] = mapped_column(String(500))       # телефон / номер карты / реквизиты / id своего счёта
+    recipient: Mapped[str] = mapped_column(String(500))
     recipient_bank: Mapped[str] = mapped_column(String(1000))
     message: Mapped[str | None] = mapped_column(Text)
     transfer_type: Mapped[str] = mapped_column(String(150))

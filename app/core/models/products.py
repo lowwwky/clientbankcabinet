@@ -5,7 +5,7 @@ from decimal import Decimal
 from sqlalchemy import Boolean, Date, ForeignKey, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from ..core.db import Base
+from core.db import Base
 
 
 class Account(Base):

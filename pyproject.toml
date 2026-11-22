@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "clientcabinetbank"
+version = "0.1.0"
+description = ""
+authors = ["Любовь Кужлева <lu.kuzhlv@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+fastapi = "^0.100.0"
+uvicorn = {extras = ["standard"], version = "^0.54.0"}
+pydantic = {extras = ["email"], version = "^2.14.2"}
+sqlalchemy = {extras = ["asyncio"], version = "^2.1.8"}
+aiosqlite = "^0.22.1"
+pydantic-settings = "^2.16.2"
+alembic = "^1.20.1"
+pyjwt = {extras = ["crypto"], version = "^2.15.1"}
+bcrypt = "^5.0.0"
+python-multipart = "^0.0.34"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+black = "^26.10.1"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
