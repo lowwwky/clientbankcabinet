@@ -18,9 +18,18 @@ class DbSettings(BaseModel):
     # Абсолютно всего должно быть False.
     echo: bool = False
 
+class RunConfig(BaseModel):
+    host: str = "0.0.0.0"
+    port: int = 8000
+
+class ApiPrefix(BaseModel):
+    prefix: str = "/api"
+
 class Settings(BaseSettings):
-    db = DbSettings = DbSettings()
+    db: DbSettings = DbSettings()
     auth_jwt: AuthJWT = AuthJWT()
+    run: RunConfig = RunConfig()
+    api: ApiPrefix = ApiPrefix()
     model_config =  SettingsConfigDict(env_file=".env", extra="ignore")
 
 
