@@ -1,8 +1,10 @@
 import uuid
 from datetime import date
+from typing import Sequence
 
 from fastapi import HTTPException
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Session
 
 from core.models.clients import Client, Document
@@ -47,3 +49,4 @@ def add_document(db: Session, client_id: uuid.UUID, data: DocumentIn, ) -> type[
     db.add(doc)
     db.commit()
     return doc
+

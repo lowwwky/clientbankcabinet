@@ -1,14 +1,18 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from sqlalchemy.orm.decl_api import _DeclarativeTyping
+
 from api import router as api_router
 import uvicorn
 
 from core.config import settings
-from core.models import db_helper
+from core.models import db_helper, Base
+
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
+
     yield
     await db_helper.dispose()
 

@@ -5,12 +5,10 @@ from decimal import Decimal
 from sqlalchemy import Boolean, Date, ForeignKey, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from core.db import Base
+from core.models import Base
 
 
 class Account(Base):
-    __tablename__ = "accounts"
-
     account_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
     account_number: Mapped[str] = mapped_column(String(200), unique=True)
@@ -22,8 +20,6 @@ class Account(Base):
 
 
 class Card(Base):
-    __tablename__ = "cards"
-
     card_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("accounts.account_id"), index=True)
     card_number: Mapped[str] = mapped_column(String(50))

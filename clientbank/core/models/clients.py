@@ -4,12 +4,10 @@ from datetime import date
 from sqlalchemy import Date,ForeignKey,String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from core.db import Base
+from core.models import Base
 
 class Client(Base):
-    __tablename__ = "clients"
-
-    client_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4())
+    client_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     last_name: Mapped[str] = mapped_column(String(500))
     first_name: Mapped[str] = mapped_column(String(500))
     middle_name: Mapped[str | None] = mapped_column(String(500))
@@ -19,9 +17,7 @@ class Client(Base):
     avatar_url: Mapped[str | None] = mapped_column(String(500))
 
 class Document(Base):
-    __tablename__ = "documents"
-
-    document_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4())
+    document_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
     document_type: Mapped[str] = mapped_column(String(200))
     series: Mapped[str] = mapped_column(String(20))
@@ -30,9 +26,7 @@ class Document(Base):
     issued_by: Mapped[str] = mapped_column(String(300))
 
 class ClientRelation(Base):
-    __tablename__ = "client_relations"
-
-    relation_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4())
+    relation_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
     related_client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"))
     relation_type: Mapped[str] = mapped_column(String(50))
