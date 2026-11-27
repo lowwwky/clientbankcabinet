@@ -56,4 +56,4 @@ async def delete_document(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Документ не найден",
         )
-    return await delete_document(session=session, document=document)
+    await delete_document(session=session, document=document)

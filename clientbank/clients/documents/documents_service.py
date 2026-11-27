@@ -56,5 +56,5 @@ async def delete_document(
         session: AsyncSession,
         document: Document,
 ):
-    session.delete(document)
-    session.commit()
+    await session.delete(document)
+    await session.commit()
