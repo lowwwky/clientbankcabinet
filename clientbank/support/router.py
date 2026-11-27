@@ -20,9 +20,9 @@ async def get_faq_for_category(
         category: str,
 ):
     faq_list = await category_faq(session=session, category=category)
-    if faq_list is None:
+    if not faq_list:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Категория не найдена"
+            detail="Категория не найдена",
         )
     return faq_list

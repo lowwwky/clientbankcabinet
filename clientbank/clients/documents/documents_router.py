@@ -10,7 +10,7 @@ from core.models import Document
 router = APIRouter(prefix="/{client_id}/documents", tags=["Документы"])
 
 
-@router.get("/all/", response_model=DocumentOut)
+@router.get("/all/", response_model=list[DocumentOut])
 async def get_documents(
         session: SESSION_DEPENDENCY,
         client_id: UUID,

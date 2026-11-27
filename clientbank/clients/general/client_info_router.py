@@ -4,7 +4,7 @@ from fastapi import HTTPException, APIRouter, status
 
 from clients.schemas import ClientOut, ContactsUpdate, UpdateAvatar
 from clients.general.client_info_service import get_client, update_client, remove_client
-from dependencies import SESSION_DEPENDENCY
+from core.dependencies import SESSION_DEPENDENCY
 
 router = APIRouter(prefix="/{client_id}/me", tags=["Информация о клиенте", ])
 
@@ -14,7 +14,7 @@ async def get_client_info(
         client_id: UUID,
         session: SESSION_DEPENDENCY,
 ):
-    client = get_client(session=session, client_id=client_id)
+    client = await get_client(session=session, client_id=client_id)
     if client is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

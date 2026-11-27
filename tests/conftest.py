@@ -7,7 +7,7 @@ from sqlalchemy.pool import NullPool
 from main import main_app
 from core.models import Base, Client, db_helper
 
-TEST_DB_URL = "postgresql+asyncpg://user:password@localhost:5432/bankclient_test"
+TEST_DB_URL = "postgresql+asyncpg://user:password@localhost:5433/bankclient_test"
 
 
 @pytest_asyncio.fixture
@@ -52,3 +52,15 @@ async def test_client_obj(session):
     session.add(obj)
     await session.commit()
     return obj
+
+@pytest_asyncio.fixture
+async def second_client_obj(session):
+    client = Client(
+        last_name="Петров",
+        first_name="Пётр",
+        birth_date=date(1992, 5, 10),
+        phone="+79990000001",
+    )
+    session.add(client)
+    await session.commit()
+    return client

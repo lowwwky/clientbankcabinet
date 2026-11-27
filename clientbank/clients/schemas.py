@@ -59,7 +59,7 @@ class DocumentUpdate(BaseModel):
 
 class RelationIn(BaseModel):
     related_client_id: UUID
-    related_type: Literal["Родитель", "Ребёнок"]
+    relation_type: Literal["Родитель", "Ребёнок"]
 
 
 class RelationOut(RelationIn):

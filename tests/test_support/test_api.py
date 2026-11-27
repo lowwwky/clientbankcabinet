@@ -1,4 +1,3 @@
-# tests/test_support/test_api.py
 import pytest_asyncio
 from core.models import Faq
 

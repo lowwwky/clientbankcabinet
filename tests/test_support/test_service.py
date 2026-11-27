@@ -5,7 +5,7 @@ from uuid import uuid4
 from unittest.mock import AsyncMock, MagicMock
 from fastapi import HTTPException
 
-from support.service import category_faq, create_request  # подставь свои пути
+from support.service import category_faq, create_request
 
 
 async def test_category_faq_empty():
@@ -17,11 +17,12 @@ async def test_category_faq_empty():
     assert await category_faq(session=session, category="Карты") == []
 
 
-async def test_create_request_operation_not_found():
-    session = AsyncMock()
-    session.get.return_value = None          # такой операции нет
+def test_create_request_operation_not_found():
+    db = MagicMock()
+    db.get.return_value = None
     data = SimpleNamespace(operation_id=uuid4())
 
     with pytest.raises(HTTPException) as error:
-        await create_request(session=session, client_id=uuid4(), data=data)
+        create_request(db=db, me=uuid4(), data=data, ip=None)
+
     assert error.value.status_code == 404
