@@ -21,6 +21,8 @@ python-multipart = "^0.0.34"
 asyncpg = "^0.32.0"
 fastapi-users = {extras = ["sqlalchemy"], version = "^15.0.5"}
 pytest = "^9.2.0"
+pytest-cov = "^7.1.0"
+pytest-asyncio = "^1.5.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^26.10.1"
@@ -28,3 +30,10 @@ black = "^26.10.1"
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["clientbank"]
+testpaths = ["tests"]

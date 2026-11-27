@@ -36,7 +36,7 @@ class Transfer(Base):
 
 class Favorite(Base):
     favorite_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
-    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
+    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("test_clients.client_id"), index=True)
     name: Mapped[str] = mapped_column(Text)
     payment_type: Mapped[str | None] = mapped_column(String(150))
     recipient_data: Mapped[dict] = mapped_column(JSON)
@@ -44,7 +44,7 @@ class Favorite(Base):
 
 class RecentRecipient(Base):
     recipient_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
-    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
+    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("test_clients.client_id"), index=True)
     phone: Mapped[str] = mapped_column(String(50))
     name: Mapped[str] = mapped_column(Text)
     last_used_at: Mapped[datetime] = mapped_column(

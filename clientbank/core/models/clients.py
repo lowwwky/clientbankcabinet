@@ -18,7 +18,7 @@ class Client(Base):
 
 class Document(Base):
     document_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
-    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
+    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("test_clients.client_id"), index=True)
     document_type: Mapped[str] = mapped_column(String(200))
     series: Mapped[str] = mapped_column(String(20))
     number: Mapped[str] = mapped_column(String(20))
@@ -27,6 +27,6 @@ class Document(Base):
 
 class ClientRelation(Base):
     relation_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
-    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
-    related_client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"))
+    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("test_clients.client_id"), index=True)
+    related_client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("test_clients.client_id"))
     relation_type: Mapped[str] = mapped_column(String(50))

@@ -1,14 +1,28 @@
-import uuid
+from fastapi import APIRouter, HTTPException, status
 
-from fastapi import APIRouter, Depends, Request
-from sqlalchemy.orm import Session
+from .schemas import FaqOut
+from core.dependencies import SESSION_DEPENDENCY
+from .service import get_all_answers, category_faq
 
-from ..core.db import get_db
-from . import service
-from .schemas import ChatOut, FaqOut, MessageIn, MessageOut, RequestIn, RequestOut
+router = APIRouter(prefix="/test_support", tags=["Поддержка и чат"])
 
-router = APIRouter(tags=["Поддержка и чат"])
 
 @router.get("/faq", response_model=list[FaqOut])
-def get_faq(category: str | None = None, db: Session = Depends(get_db)):
-    return service.list_faq(db, category)
+async def get_all_faq(
+        session: SESSION_DEPENDENCY,
+):
+    return await get_all_answers(session=session)
+
+
+@router.get("/faq/{category}", response_model=list[FaqOut])
+async def get_faq_for_category(
+        session: SESSION_DEPENDENCY,
+        category: str,
+):
+    faq_list = await category_faq(session=session, category=category)
+    if faq_list is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Категория не найдена"
+        )
+    return faq_list

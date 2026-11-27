@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 class ClientCredential(Base, SQLAlchemyBaseUserTableUUID):
 
     client_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("clients.client_id"), unique=True, nullable=False,
+        ForeignKey("test_clients.client_id"), unique=True, nullable=False,
     )
     failed_attempts: Mapped[int] = mapped_column(default=0)
     locked_until: Mapped[datetime | None] = mapped_column(

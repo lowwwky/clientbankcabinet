@@ -10,7 +10,7 @@ from core.models import Base
 
 class Account(Base):
     account_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
-    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
+    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("test_clients.client_id"), index=True)
     account_number: Mapped[str] = mapped_column(String(200), unique=True)
     name: Mapped[str | None] = mapped_column(String(400))
     balance: Mapped[Decimal] = mapped_column(Numeric(18, 2), default=Decimal("0"))

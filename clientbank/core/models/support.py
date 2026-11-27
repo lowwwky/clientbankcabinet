@@ -8,7 +8,7 @@ from core.models import Base
 
 class Chat(Base):
     chat_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
-    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
+    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("test_clients.client_id"), index=True)
     chat_type: Mapped[str] = mapped_column(String(50), default="пользовательский чат")  # или «служебный чат»
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
@@ -32,7 +32,7 @@ class Message(Base):
 
 class SupportRequest(Base):
     request_id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
-    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("clients.client_id"), index=True)
+    client_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("test_clients.client_id"), index=True)
     operation_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("operations.operation_id"))
     reason: Mapped[str] = mapped_column(Text)
     description: Mapped[str] = mapped_column(Text)

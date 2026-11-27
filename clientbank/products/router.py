@@ -9,7 +9,7 @@ from .schemas import AccountDetailOut, AccountOut, CardOut, CardRequisitesOut, C
 
 router = APIRouter(tags=["Банковские продукты"])
 
-@router.get("/clients/{client_id}/accounts", response_model=list[AccountOut])
+@router.get("/test_clients/{client_id}/accounts", response_model=list[AccountOut])
 def get_accounts(client_id: uuid.UUID, db: Session = Depends(get_db)):
     return service.list_accounts(db, client_id)
 
