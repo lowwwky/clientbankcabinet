@@ -1,29 +1,19 @@
-import uuid
+from uuid import UUID
 
-from fastapi import APIRouter, Depends, Request
-from sqlalchemy.orm import Session
+from fastapi import APIRouter
 
-from ..core.db import get_db
-from . import service
-from .schemas import ClientOut, ContactsUpdate, DocumentIn, DocumentOut
+from .schemas import ClientOut
+from .service import get_client
+from core.dependencies import SESSION_DEPENDENCY
+from clients.documents.documents_router import router as documents_router
 
 router = APIRouter(prefix="/clients", tags=["Клиенты"])
-
-@router.get("/{client_id}", response_model=ClientOut)
-def get_client(client_id: uuid.UUID, ):
-    ...
-
-@router.get("/{client_id}/documents", response_model=DocumentOut)
-def get_documents():
-    ...
-
-@router.patch("/{client_id}/contacts")
-def update_contacts():
-    ...
-
-@router.post("/{client_id}/documents", response_model=DocumentOut, status_code=201)
-def add_documents():
-    ...
+router.include_router(documents_router)
 
 
-
+@router.get("/{client_id}/info/", response_model=ClientOut)
+async def get_client_info(
+        client_id: UUID,
+        session: SESSION_DEPENDENCY
+):
+    return await get_client(session=session, client_id=client_id)

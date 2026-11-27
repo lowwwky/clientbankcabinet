@@ -36,3 +36,11 @@ class DocumentOut(DocumentIn):
 
     document_id: uuid.UUID
     client_id: uuid.UUID
+
+
+class DocumentUpdate(BaseModel):
+    document_type: str | None = Field(default=None, min_length=1, max_length=200)
+    series: str | None = Field(default=None, min_length=1, max_length=20)
+    number: str | None = Field(default=None, min_length=1, max_length=20)
+    issue_date: date | None = None
+    issued_by: str | None = Field(default=None, min_length=1, max_length=300)

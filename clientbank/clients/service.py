@@ -1,31 +1,40 @@
-import uuid
+from uuid import UUID
 from datetime import date
-from typing import Sequence
 
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Session
 
-from core.models.clients import Client, Document
-from .schemas import ClientOut, ContactsUpdate, DocumentIn
+from core.models.clients import Client
+from .schemas import ClientOut, ContactsUpdate
 
-def calc_age(birthdate: date, today:date | None = None) -> int:
+
+def calc_age(birthdate: date, today: date | None = None) -> int:
     today = today or date.today()
     return today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
 
-def get_client(db: Session, client_id: uuid.UUID) -> type[Client]:
-    client = db.get(Client,client_id)
+
+async def get_client(
+        session: AsyncSession,
+        client_id: UUID
+) -> type[ClientOut]:
+    client = await session.get(ClientOut, client_id)
     if client is None:
-        raise HTTPException(404, "Клиент не найден")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Клиент не найден"
+        )
     return client
+
 
 def client_out(client: Client) -> ClientOut:
     out = ClientOut.model_validate(client)
     out.age = calc_age(client.birth_date)
     return out
 
-def update_contacts(db: Session, client: Client, data: ContactsUpdate ) -> Client:
+
+def update_contacts(db: Session, client: Client, data: ContactsUpdate) -> Client:
     changes = data.model_dump(exclude_unset=True, exclude_none=True)
     if not changes:
         raise HTTPException(404, "Не указано, что менять")
@@ -40,13 +49,3 @@ def update_contacts(db: Session, client: Client, data: ContactsUpdate ) -> Clien
 
     db.commit()
     return client
-
-def list_documents(db: Session, client_id: uuid.UUID) -> list[Document]:
-    return list(db.scalars(select(Document).where(Document.client_id == client_id)))
-
-def add_document(db: Session, client_id: uuid.UUID, data: DocumentIn, ) -> type[Document]:
-    doc = Document(client_id=client_id, **data.model_dump())
-    db.add(doc)
-    db.commit()
-    return doc
-
